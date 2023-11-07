@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  consumer:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-11-07T11:51:25.231141215+02:00"
+    description: A Helm chart for Kubernetes
+    digest: 896cedb1876b83ccbe1f1e3b2f0e8cac4224c478d2ec8772bd23641986bedde0
+    name: consumer
+    type: application
+    urls:
+    - consumer-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-11-07T11:51:25.230761901+02:00"
