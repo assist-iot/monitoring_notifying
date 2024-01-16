@@ -19,9 +19,9 @@ monitoringnotifying:
   # Configuration of the container image.
   imagePullSecrets: []
   image:
-    repository: tzionasev/fping
+    repository: assistiot/monitoring_notifying
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "2.0.0" # 1.2.3 1.2.4 1.25 currently stable
+    tag: "2.0.0"
     pullPolicy: IfNotPresent
   
   # Configuration of the service: type and ports.
@@ -69,7 +69,6 @@ monitoringnotifying:
   envVars:
     SWAGGER_SERVER_URL: "http://192.168.49.2:30566"
     DLT_URL: "http://broker-dltbroker-api:9899/api/DLTbroker/insert"
-    # DLT_URL: "http://10.104.45.21:9899/api/DLTbroker/insert"
 
   # Component data persistence
   persistence:
