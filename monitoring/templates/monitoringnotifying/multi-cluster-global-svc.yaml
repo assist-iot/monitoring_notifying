@@ -1,0 +1,17 @@
+{{- if .Values.globalService }}
+apiVersion: assist.eu/v1
+kind: MultiClusterService
+metadata:
+  name: {{ include "monitoringnotifying.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    io.cilium/global-service: "true"
+  labels:
+    {{- include "monitoringnotifying.labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: port1
+      port: {{ .Values.monitoringnotifying.service.ports.port1.port }}
+      targetPort: {{ .Values.monitoringnotifying.service.ports.port1.targetPort }}
+      protocol: {{ .Values.monitoringnotifying.service.ports.port1.protocol }}
+{{- end }}

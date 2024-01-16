@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "pingdevices.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "pingdevices.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.pingdevices.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          {{- with .Values.pingdevices.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.pingdevices.podSecurityContext | nindent 12 }}
+          containers:
+          - name: pingdevices
+            securityContext:
+              {{- toYaml .Values.pingdevices.securityContext | nindent 14 }}
+            image: "{{ .Values.pingdevices.image.repository }}:{{ .Values.pingdevices.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: {{ .Values.pingdevices.image.pullPolicy }}
+            command:
+            - /bin/sh
+            - -example
+            - command
+          restartPolicy: {{ .Values.pingdevices.restartPolicy }}

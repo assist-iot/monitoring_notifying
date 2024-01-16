@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "monitoringnotifying.svc.headless" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "monitoringnotifying.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  clusterIP: None
+  publishNotReadyAddresses: true
+  ports:
+    - name: port1
+      port: {{ .Values.monitoringnotifying.service.ports.port1.port }}
+      targetPort: {{ .Values.monitoringnotifying.service.ports.port1.targetPort }}
+      protocol: {{ .Values.monitoringnotifying.service.ports.port1.protocol }}
+  selector:
+    {{- include "monitoringnotifying.selectorLabels" . | nindent 4 }}

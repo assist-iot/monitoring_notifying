@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "monitoringnotifying.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "monitoringnotifying.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "monitoringnotifying.fullname" . }}-headless
+  {{- if not .Values.monitoringnotifying.autoscaling.enabled }}
+  replicas: {{ .Values.monitoringnotifying.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "monitoringnotifying.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "monitoringnotifying.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.monitoringnotifying.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.enablerNodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if not .Values.enablerNodeSelector }}
+        {{- with .Values.monitoringnotifying.nodeSelector }}
+      nodeSelector:
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+      {{- with .Values.monitoringnotifying.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.monitoringnotifying.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.monitoringnotifying.podSecurityContext | nindent 8 }}
+      containers:
+        - name: monitoringnotifying
+          securityContext:
+            {{- toYaml .Values.monitoringnotifying.securityContext | nindent 12 }}
+          image: "{{ .Values.monitoringnotifying.image.repository }}:{{ .Values.monitoringnotifying.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.monitoringnotifying.image.pullPolicy }}
+          ports:
+            - name: port1
+              containerPort: {{ .Values.monitoringnotifying.service.ports.port1.containerPort }}
+              protocol: {{ .Values.monitoringnotifying.service.ports.port1.protocol }}
+          resources:
+            {{- toYaml .Values.monitoringnotifying.resources | nindent 12 }}
+          {{- with .Values.monitoringnotifying.envVars }}
+          command:           
+          - /bin/sh
+          - -c
+          - |
+            # sleep infinity
+            npm start
+          env:
+            - name: SWAGGER_SERVER_URL
+              value: {{ .exampleEnvVar | quote }}
+            - name: DLT_URL
+              value: {{ .DLT_URL | quote }}
+          {{- end }}
+          volumeMounts:
+            {{- if .Values.monitoringnotifying.persistence.enabled }}
+            - name: data
+              mountPath: registry
+            {{- end }}
+      volumes:
+  {{- if and .Values.monitoringnotifying.persistence.enabled .Values.monitoringnotifying.persistence.existingClaim }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ tpl .Values.monitoringnotifying.persistence.existingClaim $ }}
+  {{- else if not .Values.monitoringnotifying.persistence.enabled }}
+        - name: data
+          emptyDir: {}
+  {{- else }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+        {{- range .Values.monitoringnotifying.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.monitoringnotifying.persistence.size | quote }}
+  {{- end }}

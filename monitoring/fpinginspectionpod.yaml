@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: inspection-pod
+spec:
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: data-monitoring-monitoring-notifying-monitoringnotifying-0
+    #- name: config
+      #configMap:
+        #name: hlfcerts
+  containers:
+    - name: inspection-container
+      image: alpine
+      resources: {}
+        # limits:
+        #   cpu: 100m
+        #   memory: 128Mi
+        # requests:
+        #   cpu: 100m
+        #   memory: 128Mi
+      command: ["sleep", "infinity"]
+      ports:
+        - containerPort: 80
+          name: "karidopita"
+      volumeMounts:
+        - mountPath: "/data"
+          name: data
+        #- name: config
+          #mountPath: "/config"
+          #readOnly: true
