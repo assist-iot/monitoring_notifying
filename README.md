@@ -1,9 +1,9 @@
 
-# Fping_DLT
+# Monitoring and Notifying
 
   
 
-Web service/API that provides a registry for endpoints (devices or gateways), performs crud operations on the registry, pings (Fping) the endpoints and sends unreachable endpoints to the specified DLT.
+Web service/API that provides a registry for endpoints (devices or gateways), performs crud operations on the registry, pings the endpoints and sends unreachable endpoints to the specified DLT.
 
   
   
