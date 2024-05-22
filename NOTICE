@@ -1,0 +1,35 @@
+ASSIST-IoT - Architecture for Scalable, Self-*, human-centric, Intelligent, Secure, and Tactile next generation IoT
+
+This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 957258.
+
+Monitoring and Notifying enabler
+
+Copyright 2020-2023 Centre for Research and Tehnology Hellas / Information Technologies Institute
+
+I. Included Software
+
+- Apache Kafka (https://github.com/apache/kafka) Apache 2.0 License
+- Apache Zookeeper (https://github.com/apache/zookeeper) Apache 2.0 License
+- Java 8 programming language (https://www.java.com/en/) Oracle Binary Code License Agreement for the Java SE Platform Products
+- Monbgo DB (https://github.com/mongodb/mongo) Server Side Public License (SSPL) v1.0
+- Express JS (https://github.com/expressjs/express) MIT License
+
+II. Used Software
+
+- axios (https://github.com/axios/axios), MIT license
+- cron (https://github.com/kelektiv/node-cron), MIT license
+- dotenv (https://github.com/motdotla/dotenv), BSD-2-Clause license
+- express (https://github.com/expressjs/express), MIT license
+- helmet (https://github.com/helmetjs/helmet), MIT license
+- swagger-ui-express (https://github.com/scottie1984/swagger-ui-express), Apache-2.0 license
+- nodemon (https://github.com/remy/nodemon), MIT license
+
+
+III. List of licenses
+
+- BSD-3-Clause license (https://opensource.org/license/bsd-3-clause/)
+- BSD-3-Clause license (https://opensource.org/license/bsd-2-clause)
+- Apache-2.0 license (https://www.apache.org/licenses/LICENSE-2.0)
+- MIT license (https://opensource.org/license/mit/)
+- Server Side Public License (SSPL) v1.0 (https://www.mongodb.com/legal/licensing/server-side-public-license)
+- Oracle Binary Code License Agreement for the Java SE Platform Products (https://www.oracle.com/downloads/licenses/binary-code-license.html)
